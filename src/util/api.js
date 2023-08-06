@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://charming-bat-singlet.cyclic.app/https://cerulean-marlin-wig.cyclic.app/';
+const BASE_URL = 'https://cerulean-marlin-wig.cyclic.app/';
 
 // get calls from the Activity Feed
 export const getCalls = () => {

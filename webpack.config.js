@@ -25,10 +25,15 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    alias: {
+      'react-dom': 'react-dom/client'
+    }
+  },
   plugins: [
     new HtmlWebPackPlugin({
       template: "./public/index.html",
       filename: "./index.html"
     })
-  ]
+  ]  
 };
