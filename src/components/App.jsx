@@ -5,11 +5,19 @@ import { getCalls } from "../util/api";
 import Header from "./Header.jsx";
 import CallInboundIcon from "./CallInboundIcon";
 import CallOutboundIcon from "./CallOutboundIcon";
-import PhoneCallCountIcon from "./PhoneCallCountIcon"; 
+import AllPhoneCallsPage from "./AllPhoneCallsPage";
+import ArchivedPhoneCallsPage from "./ArchivedPhoneCallsPage";
+import PhoneCallCountIcon from "./PhoneCallCountIcon";
 
-const App = () => {
+export const secondsToMinutes = (seconds) => {
+    return Math.floor(seconds / 60);
+  };
+
+  const App = () => {
   const [calls, setCalls] = useState([]);
   const [phoneCallCounts, setPhoneCallCounts] = useState({});
+  const [currentTab, setCurrentTab] = useState("all");
+
 
   useEffect(() => {
     // Fetch the list of calls from the API when the component mounts
@@ -17,13 +25,12 @@ const App = () => {
       .then((response) => {
         setCalls(response.data);
         setPhoneCallCounts(countPhoneCalls(response.data));
+        console.log("SET CALLS", response.data)
       })
       .catch((error) => console.error(error));
   }, []);
 
-  const secondsToMinutes = (seconds) => {
-    return Math.floor(seconds / 60);
-  };
+  
 
   const countPhoneCalls = (calls) => {
     const phoneCallCounts = {};
@@ -38,12 +45,28 @@ const App = () => {
     return phoneCallCounts;
   };
 
+  const allCalls = calls;
+  const archivedCalls = calls.filter((call) => call.is_archived);
+
+
   return (
     <div className="container">
       <Header />
       <div className="container-view">Some activities should be here</div>
 
       <h3>Activity Feed</h3>
+
+      <ul>
+        <li onClick={() => setCurrentTab("all")}>All Calls</li>
+        <li onClick={() => setCurrentTab("archived")}>Archived Calls</li>
+      </ul>
+
+      {currentTab === "all" ? (
+        <AllPhoneCallsPage calls={allCalls} />
+      ) : (
+        <ArchivedPhoneCallsPage calls={archivedCalls} />
+      )}
+
       <ul>
         {calls.map((call) => {
           const phoneNumber =
@@ -56,12 +79,24 @@ const App = () => {
                 <CallOutboundIcon />
               )}
               <span>From {call.from}</span>
-              <span>To {call.to}</span>
-              <span>Via {call.via}</span>
-              <span>{secondsToMinutes(call.duration)} minutes</span>
-              <span> Call Type {call.call_type}</span>
-              <PhoneCallCountIcon count={phoneCallCounts[phoneNumber]} />
               
+              <span>To {call.to}</span>
+              
+              <span>Via {call.via} </span>
+              
+              <span>Duration {secondsToMinutes(call.duration)} minutes</span>
+
+              <span> Call Type {call.call_type}</span>
+              
+              <span style={{color: "orange"}}> ARCHIVE {call.is_archived}</span>
+              
+              <span style={{color: "blue"}}> Call Time {call.created_at}</span>  
+              {Object.keys(phoneCallCounts).map((phoneNumber) => (
+          
+              <span key={phoneNumber}>
+                Phone Number: {phoneNumber}, Count: {phoneCallCounts[phoneNumber]}
+              </span>
+        ))}
             </li>
           );
         })}
