@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCalls } from "../util/api";
 import Header from "./Header.jsx";
-
 import CallInboundIcon from "./CallInboundIcon";
 import CallOutboundIcon from "./CallOutboundIcon";
 import AllPhoneCallsPage from "./AllPhoneCallsPage";
@@ -66,17 +65,58 @@ const App = () => {
         <h3>Activity Feed</h3>
 
         {currentTab === "all" ? (
-          <AllPhoneCallsPage calls={allCalls} />
+          calls.map((call, index) => {
+            if (index >= lastCallIndex && index < lastCallIndex + 3) {
+              // Render call information for "All Calls"
+              const phoneNumber =
+                call.direction === "inbound" ? call.from : call.to;
+              return (
+                <li key={call.id} className="call-container">
+                  {call.direction === "inbound" ? (
+                    <CallInboundIcon />
+                  ) : (
+                    <CallOutboundIcon />
+                  )}
+                  <span>From {call.from}</span>
+
+                  <span>To {call.to}</span>
+
+                  <span>Via {call.via} </span>
+
+                  <span>
+                    Duration {secondsToMinutes(call.duration)} minutes
+                  </span>
+
+                  <span> Call Type {call.call_type}</span>
+
+                  <span style={{ color: "orange" }}>
+                    {" "}
+                    ARCHIVE {call.is_archived}
+                  </span>
+
+                  <span style={{ color: "blue" }}>
+                    {" "}
+                    Call Time {call.created_at}
+                  </span>
+                  {Object.keys(phoneCallCounts).map((phoneNumber) => (
+                    <span key={phoneNumber}>
+                      Phone Number: {phoneNumber}, Count:{" "}
+                      {phoneCallCounts[phoneNumber]}
+                    </span>
+                  ))}
+                </li>
+              );
+            }
+            return null;
+          })
         ) : (
-          <ArchivedPhoneCallsPage
-            calls={archivedCalls}
-            currentTab={currentTab}
-          />
+          <ArchivedPhoneCallsPage calls={archivedCalls} currentTab={currentTab} />
         )}
 
         <ul>
-          {calls.map((call, index) => {
+          {archivedCalls.map((call, index) => {
             if (index >= lastCallIndex && index < lastCallIndex + 3) {
+              // Render call information for "Archived Calls"
               const phoneNumber =
                 call.direction === "inbound" ? call.from : call.to;
               return (
