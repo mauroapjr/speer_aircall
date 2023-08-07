@@ -55,9 +55,11 @@ const App = () => {
         <Header />
         <div className="container-view">
           Some activities should be here
-          <ul>          
+          <ul>
             <button onClick={() => setCurrentTab("all")}>All Calls</button>
-            <button onClick={() => setCurrentTab("archived")}>Archived Calls</button>
+            <button onClick={() => setCurrentTab("archived")}>
+              Archived Calls
+            </button>
           </ul>
         </div>
 
@@ -70,7 +72,7 @@ const App = () => {
         )}
 
         <ul>
-        {calls.slice(0, callsToShow).map((call)  => {
+          {calls.slice(0, callsToShow).map((call) => {
             const phoneNumber =
               call.direction === "inbound" ? call.from : call.to;
             return (
@@ -109,6 +111,7 @@ const App = () => {
             );
           })}
         </ul>
+        <button onClick={loadMoreCalls}>Load More Calls</button>
       </div>
     </div>
   );
