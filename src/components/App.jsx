@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getCalls, archiveCalls } from "../util/api";
-import Header from "./Header.jsx";
-import AllPhoneCallsPage from "./AllPhoneCallsPage";
+import { getCalls } from "../util/api";
+import Header from "./Header";
+import ActivityFeedPage from "./ActivityFeedPage";
+import ActivityDetailPage from "./ActivityDetailPage";
 import ArchivedPhoneCallsPage from "./ArchivedPhoneCallsPage";
-import CallInbound from "./ActivityDetailPage";
-import InboxPage from "./InboxPage";
 import ArchiveButton from "./ArchiveButton";
 
 const App = () => {
@@ -24,38 +23,37 @@ const App = () => {
   };
 
   const unarchivedCalls = calls.filter((call) => !call.is_archived);
+  const archivedCalls = calls.filter((call) => call.is_archived);
 
   return (
     <div>
       <div className="container">
         <Header />
         <div className="container-view">
-          Some activities should be here
           <ul>
-            <button onClick={() => handleTabChange("all")}>All Calls</button>
+            <button onClick={() => handleTabChange("all")}>
+              Activity Feed
+            </button>
             <button onClick={() => handleTabChange("archived")}>
               Archived Calls
             </button>
-            <button onClick={() => setCurrentTab("inbox")}>Inbox</button>
-
+            <button onClick={() => setCurrentTab("detail")}>INBOX</button>
             <ArchiveButton calls={calls} setCalls={setCalls} />
           </ul>
         </div>
 
-        <h3>Activity Feed</h3>
-
         {currentTab === "all" ? (
-          <AllPhoneCallsPage calls={calls} />
+          <ActivityFeedPage calls={unarchivedCalls} />
         ) : currentTab === "archived" ? (
-          <ArchivedPhoneCallsPage calls={calls} />
+          <ArchivedPhoneCallsPage calls={archivedCalls} />
         ) : (
-          <InboxPage calls={unarchivedCalls} />
+          <ActivityDetailPage calls={unarchivedCalls} setCalls={setCalls} />
         )}
-
-        {currentTab === "all" && <CallInbound />}
       </div>
     </div>
   );
 };
 
 export default App;
+
+

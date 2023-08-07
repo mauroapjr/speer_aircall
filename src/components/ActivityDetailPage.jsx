@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getCalls } from "../util/api";
 import { secondsToMinutes, countPhoneCalls } from "../util/helpers";
 
-const ActivityDetailPage = () => {
-  const [calls, setCalls] = useState([]);
+const ActivityDetailPage = ({ calls, setCalls }) => {
   const [phoneCallCounts, setPhoneCallCounts] = useState({});
-  const [lastCallIndex, setLastCallIndex] = useState(2);
+  const [visibleCalls, setVisibleCalls] = useState(3); 
 
   useEffect(() => {
     getCalls()
@@ -20,44 +19,47 @@ const ActivityDetailPage = () => {
   const unarchivedCalls = calls.filter((call) => !call.is_archived);
 
   const loadMoreCalls = () => {
-    setLastCallIndex((prevIndex) => (prevIndex + 3) % calls.length);
+    setVisibleCalls((prevVisibleCalls) => prevVisibleCalls + 3); 
   };
 
   return (
     <div>
+      <h3>Inbox</h3>
       <ul>
-        {unarchivedCalls.map((call, index) => {
-          if (index >= lastCallIndex && index < lastCallIndex + 3) {
-            const phoneNumber =
-              call.direction === "inbound" ? call.from : call.to;
-            return (
-              <li key={call.id} className="call-container">
-                <span>From {call.from}</span>
-                <span>To {call.to}</span>
-                <span>Via {call.via}</span>
-                <span>Duration {secondsToMinutes(call.duration)} minutes</span>
-                <span>Call Type {call.call_type}</span>
-                <span style={{ color: "orange" }}>
-                  ARCHIVE {call.is_archived}
+        {unarchivedCalls.slice(0, visibleCalls).map((call) => {
+          const phoneNumber =
+            call.direction === "inbound" ? call.from : call.to;
+          return (
+            <li key={call.id} className="call-container">
+              <span>From {call.from}</span>
+              <span>To {call.to}</span>
+              <span>Via {call.via}</span>
+              <span>Duration {secondsToMinutes(call.duration)} minutes</span>
+              <span>Call Type {call.call_type}</span>
+              <span style={{ color: "orange" }}>
+                ARCHIVE {call.is_archived}
+              </span>
+              <span style={{ color: "blue" }}>Call Time {call.created_at}</span>
+              {Object.keys(phoneCallCounts).map((phoneNumber) => (
+                <span key={phoneNumber}>
+                  Phone Number: {phoneNumber}, Count:{" "}
+                  {phoneCallCounts[phoneNumber]}
                 </span>
-                <span style={{ color: "blue" }}>
-                  Call Time {call.created_at}
-                </span>
-                {Object.keys(phoneCallCounts).map((phoneNumber) => (
-                  <span key={phoneNumber}>
-                    Phone Number: {phoneNumber}, Count:{" "}
-                    {phoneCallCounts[phoneNumber]}
-                  </span>
-                ))}
-              </li>
-            );
-          }
-          return null;
+              ))}
+            </li>
+          );
         })}
       </ul>
-      <button onClick={loadMoreCalls}>Load More Calls</button>
+      {visibleCalls < unarchivedCalls.length && (
+        <div style={{ textAlign: "center" }}>
+          <button onClick={loadMoreCalls}>Load More Calls</button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default ActivityDetailPage;
+
+
+
