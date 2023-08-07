@@ -1,15 +1,13 @@
-// CallInbound.jsx
 import React, { useEffect, useState } from "react";
 import { getCalls } from "../util/api";
-import { secondsToMinutes } from "../util/helpers";
+import { secondsToMinutes, countPhoneCalls } from "../util/helpers";
 
-const CallInbound = () => {
+const ActivityDetailPage = () => {
   const [calls, setCalls] = useState([]);
   const [phoneCallCounts, setPhoneCallCounts] = useState({});
   const [lastCallIndex, setLastCallIndex] = useState(2);
 
   useEffect(() => {
-    // Fetch the list of calls from the API when the component mounts
     getCalls()
       .then((response) => {
         setCalls(response.data);
@@ -19,19 +17,7 @@ const CallInbound = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  const countPhoneCalls = (calls) => {
-    const phoneCallCounts = {};
-    for (const call of calls) {
-      const phoneNumber = call.direction === "inbound" ? call.from : call.to;
-      console.log("PHONE CALL", calls);
-      if (phoneCallCounts[phoneNumber]) {
-        phoneCallCounts[phoneNumber]++;
-      } else {
-        phoneCallCounts[phoneNumber] = 1;
-      }
-    }
-    return phoneCallCounts;
-  };
+  const unarchivedCalls = calls.filter((call) => !call.is_archived);
 
   const loadMoreCalls = () => {
     setLastCallIndex((prevIndex) => (prevIndex + 3) % calls.length);
@@ -40,9 +26,10 @@ const CallInbound = () => {
   return (
     <div>
       <ul>
-        {calls.map((call, index) => {
+        {unarchivedCalls.map((call, index) => {
           if (index >= lastCallIndex && index < lastCallIndex + 3) {
-            const phoneNumber = call.direction === "inbound" ? call.from : call.to;
+            const phoneNumber =
+              call.direction === "inbound" ? call.from : call.to;
             return (
               <li key={call.id} className="call-container">
                 <span>From {call.from}</span>
@@ -50,11 +37,16 @@ const CallInbound = () => {
                 <span>Via {call.via}</span>
                 <span>Duration {secondsToMinutes(call.duration)} minutes</span>
                 <span>Call Type {call.call_type}</span>
-                <span style={{ color: "orange" }}>ARCHIVE {call.is_archived}</span>
-                <span style={{ color: "blue" }}>Call Time {call.created_at}</span>
+                <span style={{ color: "orange" }}>
+                  ARCHIVE {call.is_archived}
+                </span>
+                <span style={{ color: "blue" }}>
+                  Call Time {call.created_at}
+                </span>
                 {Object.keys(phoneCallCounts).map((phoneNumber) => (
                   <span key={phoneNumber}>
-                    Phone Number: {phoneNumber}, Count: {phoneCallCounts[phoneNumber]}
+                    Phone Number: {phoneNumber}, Count:{" "}
+                    {phoneCallCounts[phoneNumber]}
                   </span>
                 ))}
               </li>
@@ -68,4 +60,4 @@ const CallInbound = () => {
   );
 };
 
-export default CallInbound;
+export default ActivityDetailPage;
