@@ -16,6 +16,7 @@ const App = () => {
   const [calls, setCalls] = useState([]);
   const [phoneCallCounts, setPhoneCallCounts] = useState({});
   const [currentTab, setCurrentTab] = useState("all");
+  const [callsToShow, setCallsToShow] = useState(3);
 
   useEffect(() => {
     // Fetch the list of calls from the API when the component mounts
@@ -44,6 +45,10 @@ const App = () => {
   const allCalls = calls;
   const archivedCalls = calls.filter((call) => call.is_archived);
 
+  const loadMoreCalls = () => {
+    setCallsToShow((prevCalls) => prevCalls + 3);
+  };
+
   return (
     <div>
       <div className="container">
@@ -65,7 +70,7 @@ const App = () => {
         )}
 
         <ul>
-          {calls.map((call) => {
+        {calls.slice(0, callsToShow).map((call)  => {
             const phoneNumber =
               call.direction === "inbound" ? call.from : call.to;
             return (
