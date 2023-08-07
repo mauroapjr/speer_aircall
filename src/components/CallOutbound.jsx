@@ -1,6 +1,6 @@
 import React from "react";
 
-const CallOutboundIcon = () => {
+const CallOutbound = () => {
   return (
     <i className="bi bi-telephone-outbound">
       <svg
@@ -16,4 +16,4 @@ const CallOutboundIcon = () => {
   );
 };
 
-export default CallOutboundIcon;
+export default CallOutbound;
