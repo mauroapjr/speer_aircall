@@ -1,5 +1,11 @@
 export const secondsToMinutes = (seconds) => {
-  return Math.floor(seconds / 60);
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  const hoursPart = hours > 0 ? `${hours} hr` : '';
+  const minutesPart = minutes > 0 ? `${minutes} min` : '';
+
+  return `${hoursPart} ${minutesPart}`;
 };
 
 export const countPhoneCalls = (calls) => {

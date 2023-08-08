@@ -26,7 +26,7 @@ const CallCard = ({ call, context }) => {
                 <i className="bi bi-telephone-outbound"></i>
               )}
             </span>
-            <span>Duration: {secondsToMinutes(call.duration)} minutes</span>
+            <span>Duration: {secondsToMinutes(call.duration)} </span>
           </div>
         </>
       );
