@@ -1,5 +1,6 @@
-import React from 'react';
-import { updateCall } from '../util/api';
+import React from "react";
+import { updateCall } from "../util/api";
+import { Button } from "react-bootstrap";
 
 const ArchiveButton = ({ calls, setCalls }) => {
   const handleArchiveAll = () => {
@@ -21,7 +22,9 @@ const ArchiveButton = ({ calls, setCalls }) => {
     // Wait for all promises to resolve using Promise.all
     Promise.all(archivePromises)
       .then((archivedCallIds) => {
-        const successfulArchivedCallIds = archivedCallIds.filter((id) => id !== null);
+        const successfulArchivedCallIds = archivedCallIds.filter(
+          (id) => id !== null
+        );
         if (successfulArchivedCallIds.length > 0) {
           console.log("All calls archived successfully!");
           setCalls(updatedCalls);
@@ -53,7 +56,9 @@ const ArchiveButton = ({ calls, setCalls }) => {
     // Wait for all promises to resolve using Promise.all
     Promise.all(unarchivePromises)
       .then((unarchivedCallIds) => {
-        const successfulUnarchivedCallIds = unarchivedCallIds.filter((id) => id !== null);
+        const successfulUnarchivedCallIds = unarchivedCallIds.filter(
+          (id) => id !== null
+        );
         if (successfulUnarchivedCallIds.length > 0) {
           console.log("All calls unarchived successfully!");
           setCalls(updatedCalls);
@@ -68,8 +73,12 @@ const ArchiveButton = ({ calls, setCalls }) => {
 
   return (
     <div>
-      <button onClick={handleArchiveAll}>Archive All Calls</button>
-      <button onClick={handleUnarchiveAll}>Unarchive All Calls</button>
+      <Button variant="primary" onClick={handleArchiveAll}>
+        Archive all Calls
+      </Button>
+      <Button variant="primary" onClick={handleUnarchiveAll}>
+        Unarchive all Calls
+      </Button>
     </div>
   );
 };
