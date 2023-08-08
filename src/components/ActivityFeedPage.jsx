@@ -1,27 +1,38 @@
-import React, { useEffect } from "react";
-import { secondsToMinutes, countPhoneCalls } from "../util/helpers";
+import React, { useState } from "react";
+import CallCard from "./CallCard";
 
 const ActivityFeedPage = ({ calls }) => {
   const unarchivedCalls = calls ?? [];
+  const itemsPerPage = 5; 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentCalls = unarchivedCalls.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div>
       <h3>Activity Feed</h3>
       <ul>
-        {unarchivedCalls.map((call) => (
-          <li key={call.id} className="call-container">
-            <span>From {call.from}</span>
-            <span>To {call.to}</span>
-            <span>Via {call.via}</span>
-            <span>Duration {secondsToMinutes(call.duration)} minutes</span>
-            <span>Call Type {call.call_type}</span>
-            <span style={{ color: "orange" }}>ARCHIVE {call.is_archived}</span>
-            <span style={{ color: "blue" }}>Call Time {call.created_at}</span>
-          </li>
+        {currentCalls.map((call) => (
+          <CallCard key={call.id} call={call} context="feed" />
         ))}
       </ul>
+      
+      <div>
+        {Array.from({ length: Math.ceil(unarchivedCalls.length / itemsPerPage) }, (_, index) => (
+          <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default ActivityFeedPage;
+

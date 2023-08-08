@@ -19,14 +19,14 @@ const App = () => {
       })
       .catch((error) => console.error(error));
   }, []);
-
+ 
   const handleTabChange = (tab) => {
     setCurrentTab(tab);
   };
 
   const unarchivedCalls = calls.filter((call) => !call.is_archived);
   const archivedCalls = calls.filter((call) => call.is_archived);
-
+console.log('CALLS', calls)
   return (
     <div>
       <div className="container">

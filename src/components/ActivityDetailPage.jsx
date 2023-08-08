@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getCalls } from "../util/api";
-import { secondsToMinutes, countPhoneCalls } from "../util/helpers";
+import { countPhoneCalls } from "../util/helpers";
+import CallCard from "./CallCard";
 
 const ActivityDetailPage = ({ calls, setCalls }) => {
   const [phoneCallCounts, setPhoneCallCounts] = useState({});
-  const [visibleCalls, setVisibleCalls] = useState(3);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     getCalls()
@@ -18,43 +20,33 @@ const ActivityDetailPage = ({ calls, setCalls }) => {
 
   const unarchivedCalls = calls.filter((call) => !call.is_archived);
 
-  const loadMoreCalls = () => {
-    setVisibleCalls((prevVisibleCalls) => prevVisibleCalls + 3);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentCalls = unarchivedCalls.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
     <div>
       <h3>Inbox</h3>
       <ul>
-        {unarchivedCalls.slice(0, visibleCalls).map((call) => {
-          const phoneNumber =
-            call.direction === "inbound" ? call.from : call.to;
-          return (
-            <li key={call.id} className="call-container">
-              <span>From {call.from}</span>
-              <span>To {call.to}</span>
-              <span>Via {call.via}</span>
-              <span>Duration {secondsToMinutes(call.duration)} minutes</span>
-              <span>Call Type {call.call_type}</span>
-              <span style={{ color: "orange" }}>
-                ARCHIVE {call.is_archived}
-              </span>
-              <span style={{ color: "blue" }}>Call Time {call.created_at}</span>
-              {Object.keys(phoneCallCounts).map((phoneNumber) => (
-                <span key={phoneNumber}>
-                  Phone Number: {phoneNumber}, Count:{" "}
-                  {phoneCallCounts[phoneNumber]}
-                </span>
-              ))}
-            </li>
-          );
-        })}
+        {currentCalls.map((call) => (
+          <CallCard key={call.id} call={call} context="detail" />
+        ))}
       </ul>
-      {visibleCalls < unarchivedCalls.length && (
-        <div style={{ textAlign: "center" }}>
-          <button onClick={loadMoreCalls}>Load More Calls</button>
-        </div>
-      )}
+
+      <div>
+        {Array.from(
+          { length: Math.ceil(unarchivedCalls.length / itemsPerPage) },
+          (_, index) => (
+            <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+              {index + 1}
+            </button>
+          )
+        )}
+      </div>
     </div>
   );
 };
