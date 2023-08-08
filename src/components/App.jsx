@@ -6,6 +6,8 @@ import ActivityDetailPage from "./ActivityDetailPage";
 import ArchivedPhoneCallsPage from "./ArchivedPhoneCallsPage";
 import ArchiveButton from "./ArchiveButton";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const App = () => {
   const [currentTab, setCurrentTab] = useState("all");
   const [calls, setCalls] = useState([]);
@@ -55,5 +57,3 @@ const App = () => {
 };
 
 export default App;
-
-

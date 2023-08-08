@@ -4,7 +4,7 @@ import { secondsToMinutes, countPhoneCalls } from "../util/helpers";
 
 const ActivityDetailPage = ({ calls, setCalls }) => {
   const [phoneCallCounts, setPhoneCallCounts] = useState({});
-  const [visibleCalls, setVisibleCalls] = useState(3); 
+  const [visibleCalls, setVisibleCalls] = useState(3);
 
   useEffect(() => {
     getCalls()
@@ -19,7 +19,7 @@ const ActivityDetailPage = ({ calls, setCalls }) => {
   const unarchivedCalls = calls.filter((call) => !call.is_archived);
 
   const loadMoreCalls = () => {
-    setVisibleCalls((prevVisibleCalls) => prevVisibleCalls + 3); 
+    setVisibleCalls((prevVisibleCalls) => prevVisibleCalls + 3);
   };
 
   return (
@@ -60,6 +60,3 @@ const ActivityDetailPage = ({ calls, setCalls }) => {
 };
 
 export default ActivityDetailPage;
-
-
-
