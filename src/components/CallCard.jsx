@@ -1,5 +1,6 @@
 import React from "react";
 import { secondsToMinutes } from "../util/helpers";
+import "../css/callCard.css";
 
 const CallCard = ({ call, context }) => {
   const renderCardContent = () => {
@@ -15,7 +16,16 @@ const CallCard = ({ call, context }) => {
           </div>
           <div className="call-details">
             <span>From: {call.from}</span>
-            <span>Call Type: {call.call_type}</span>
+            <span>
+              Call Type:{" "}
+              {call.call_type === "missed" ? (
+                <i className="bi bi-telephone-x"></i>
+              ) : call.call_type === "answered" ? (
+                <i className="bi bi-telephone-inbound"></i>
+              ) : (
+                <i className="bi bi-telephone-outbound"></i>
+              )}
+            </span>
             <span>Duration: {secondsToMinutes(call.duration)} minutes</span>
           </div>
         </>
@@ -25,6 +35,13 @@ const CallCard = ({ call, context }) => {
         <>
           <span style={{ color: "orange" }}>ARCHIVE {call.is_archived}</span>
           <span style={{ color: "blue" }}>Call Time: {call.created_at}</span>
+        </>
+      );
+    } else if (context === "archived") {
+      return (
+        <>
+          <span>From: {call.from}</span>
+          <span>To: {call.to}</span>
         </>
       );
     } else {

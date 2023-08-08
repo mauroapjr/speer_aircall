@@ -20,7 +20,7 @@ const ArchivedPhoneCallsPage = ({ calls }) => {
       <h2>Archived Phone Calls</h2>
       <ul>
         {currentCalls.map((call) => (
-          <CallCard key={call.id} call={call} />
+          <CallCard key={call.id} call={call} context="archived"/>
         ))}
       </ul>
       

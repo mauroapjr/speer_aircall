@@ -1,3 +1,4 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 html, body, h1, h2, h3, ul, li {
   margin: 0;
   padding: 0;
@@ -7,8 +8,8 @@ html, body, h1, h2, h3, ul, li {
 }
 
 body {
-  /* background: #233142; */
-  background: #69819e;
+  background: #233142;
+  /* background: #69819e; */
   font-family: helvetica, arial, sans-serif;
   font-size: 13px;
   color: #333333;
