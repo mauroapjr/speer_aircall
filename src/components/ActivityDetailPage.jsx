@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { getCalls } from "../util/api";
+import { getCalls, updateCall } from "../util/api";
 import { countPhoneCalls } from "../util/helpers";
 import { Button } from "react-bootstrap";
-
+import ArchiveCallButton from "./ArchiveCallButton";
 import CallCard from "./CallCard";
 
 const ActivityDetailPage = ({ calls, setCalls }) => {
@@ -30,17 +30,35 @@ const ActivityDetailPage = ({ calls, setCalls }) => {
     setCurrentPage(pageNumber);
   };
 
+
+    const handleArchive = (callId) => {
+      const updatedCalls = calls.map((call) =>
+        call.id === callId ? { ...call, is_archived: true } : call
+      );
+      updateCall(callId, { is_archived: true })
+      .then(() => {
+        console.log(`Call ID ${callId} archived successfully!`);
+        setCalls(updatedCalls);
+      })
+      .catch((error) => {
+        console.error(`Error archiving call ID ${callId}:`, error);
+      });
+  };
+
   return (
     <div>
       <h2 className="m-2">Inbox</h2>
       <ul>
         {currentCalls.map((call) => (
-          <CallCard key={call.id} call={call} context="detail" />
+          <div key={call.id}>
+            <CallCard call={call} context="detail" onArchive={handleArchive} />
+            {!call.is_archived && <ArchiveCallButton call={call} onArchive={handleArchive} />}
+          </div>
         ))}
       </ul>
 
       <div>
-        {Array.from(
+      {Array.from(
           { length: Math.ceil(unarchivedCalls.length / itemsPerPage) },
           (_, index) => (
             <Button className="me-2" key={index + 1} onClick={() => handlePageChange(index + 1)}>

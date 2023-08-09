@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getCalls } from "../util/api";
+import { getCalls, updateCall } from "../util/api";
 import Header from "./Header";
 import ActivityFeedPage from "./ActivityFeedPage";
 import ActivityDetailPage from "./ActivityDetailPage";
@@ -12,6 +12,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
   const [currentTab, setCurrentTab] = useState("all");
   const [calls, setCalls] = useState([]);
+  const unarchivedCalls = calls.filter((call) => !call.is_archived);
+  const archivedCalls = calls.filter((call) => call.is_archived);
+  console.log('CALLS', calls)
 
   useEffect(() => {
     getCalls()
@@ -25,9 +28,21 @@ const App = () => {
     setCurrentTab(tab);
   };
 
-  const unarchivedCalls = calls.filter((call) => !call.is_archived);
-  const archivedCalls = calls.filter((call) => call.is_archived);
-console.log('CALLS', calls)
+  const handleArchive = (callId) => {
+    const updatedCalls = calls.map((call) =>
+      call.id === callId ? { ...call, is_archived: true } : call
+    );
+
+    updateCall(callId, { is_archived: true })
+      .then(() => {
+        console.log(`Call ID ${callId} archived successfully!`);
+        setCalls(updatedCalls);
+      })
+      .catch((error) => {
+        console.error(`Error archiving call ID ${callId}:`, error);
+      });
+  };
+  
   return (
     <div>
       <div className="container">
@@ -50,7 +65,7 @@ console.log('CALLS', calls)
         ) : currentTab === "archived" ? (
           <ArchivedPhoneCallsPage calls={archivedCalls} />
         ) : (
-          <ActivityDetailPage calls={unarchivedCalls} setCalls={setCalls} />
+          <ActivityDetailPage calls={unarchivedCalls} setCalls={setCalls} onArchive={handleArchive}/>
         )}
         <ArchiveButton calls={calls} setCalls={setCalls} />
       </div>
