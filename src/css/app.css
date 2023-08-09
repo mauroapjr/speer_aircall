@@ -7,12 +7,7 @@
   align-items: center;
   justify-content: flex-start;
   padding: 10px;
-  /* left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0; */
-  width: 376px;
-  /* height: 100%; */
+  width: 376px;  
   z-index: 100;
   background: white;
   border-radius: 3px;
@@ -32,12 +27,6 @@
   display: flex;
   justify-content: space-evenly;
 }
-
-/* .container-view {
-  display: flex;
-  align-content: flex-start;
-  align-items: flex-start;
-} */
 
 .call-container {
   border: 1px solid #ddd; 
