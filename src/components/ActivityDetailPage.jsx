@@ -32,7 +32,7 @@ const ActivityDetailPage = ({ calls, setCalls }) => {
 
   return (
     <div>
-      <h2 className="text-white">Inbox</h2>
+      <h2 className="m-2">Inbox</h2>
       <ul>
         {currentCalls.map((call) => (
           <CallCard key={call.id} call={call} context="detail" />
@@ -43,7 +43,7 @@ const ActivityDetailPage = ({ calls, setCalls }) => {
         {Array.from(
           { length: Math.ceil(unarchivedCalls.length / itemsPerPage) },
           (_, index) => (
-            <Button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+            <Button className="me-2" key={index + 1} onClick={() => handlePageChange(index + 1)}>
               {index + 1}
             </Button>
           )

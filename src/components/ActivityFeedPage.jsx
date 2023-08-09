@@ -17,7 +17,7 @@ const ActivityFeedPage = ({ calls }) => {
 
   return (
     <div>
-      <h2 className="text-white">Activity Feed</h2>
+      <h2 className="m-2">Activity Feed</h2>
       <ul>
         {currentCalls.map((call) => (
           <CallCard key={call.id} call={call} context="feed" />
@@ -26,7 +26,7 @@ const ActivityFeedPage = ({ calls }) => {
       
       <div>
         {Array.from({ length: Math.ceil(unarchivedCalls.length / itemsPerPage) }, (_, index) => (
-          <Button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+          <Button className="me-2" key={index + 1} onClick={() => handlePageChange(index + 1)}>
             {index + 1}
           </Button>
         ))}

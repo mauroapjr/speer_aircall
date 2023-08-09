@@ -1,4 +1,5 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+
 .container {
   position: relative;
   display: flex;
@@ -11,7 +12,7 @@
   right: 0;
   bottom: 0; */
   width: 376px;
-  height: 100%;
+  /* height: 100%; */
   z-index: 100;
   background: white;
   border-radius: 3px;
@@ -38,11 +39,6 @@
   align-items: flex-start;
 } */
 
-.container .container-view ul li {
- 
-  
-}
-
 .call-container {
   border: 1px solid #ddd; 
   padding: 10px;
@@ -52,7 +48,11 @@
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, .9);
 }
 
-
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
 
 
