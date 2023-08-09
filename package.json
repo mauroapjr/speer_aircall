@@ -31,9 +31,10 @@
       "react-app/jest"
     ],
     "rules": {
-      "no-warnings-as-errors": "warn"
+      "no-warning-comments": "error"
     }
   },
+  
   "browserslist": {
     "production": [
       ">0.2%",
