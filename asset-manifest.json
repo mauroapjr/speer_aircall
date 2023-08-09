@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/speer_aircall/static/css/main.b933af3c.css",
+    "main.js": "/speer_aircall/static/js/main.a2dc7cf8.js",
+    "static/media/bootstrap-icons.woff?": "/speer_aircall/static/media/bootstrap-icons.4753c5ba57962b4d7bf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/speer_aircall/static/media/bootstrap-icons.6d63d0501e5ed7b79dab.woff2",
+    "index.html": "/speer_aircall/index.html",
+    "main.b933af3c.css.map": "/speer_aircall/static/css/main.b933af3c.css.map",
+    "main.a2dc7cf8.js.map": "/speer_aircall/static/js/main.a2dc7cf8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b933af3c.css",
+    "static/js/main.a2dc7cf8.js"
+  ]
+}
