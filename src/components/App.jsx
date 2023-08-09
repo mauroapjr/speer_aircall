@@ -40,8 +40,23 @@ const App = () => {
       })
       .catch((error) => {
         console.error(`Error archiving call ID ${callId}:`, error);
-      });
+    });      
   };
+
+  const handleUnarchive = (callId) => {
+    const updatedCalls = calls.map((call) =>
+      call.id === callId ? { ...call, is_archived: false } : call
+    );
+
+    updateCall(callId, { is_archived: false })
+      .then(() => {
+        console.log(`Call ID ${callId} unarchived successfully!`);
+        setCalls(updatedCalls);
+      })
+      .catch((error) => {
+        console.error(`Error unarchiving call ID ${callId}:`, error);
+      });
+  };  
   
   return (
     <div>
@@ -63,7 +78,7 @@ const App = () => {
         {currentTab === "all" ? (
           <ActivityFeedPage calls={unarchivedCalls} />
         ) : currentTab === "archived" ? (
-          <ArchivedPhoneCallsPage calls={archivedCalls} />
+          <ArchivedPhoneCallsPage calls={archivedCalls} setCalls={setCalls} onUnarchive={handleUnarchive}/>
         ) : (
           <ActivityDetailPage calls={unarchivedCalls} setCalls={setCalls} onArchive={handleArchive}/>
         )}

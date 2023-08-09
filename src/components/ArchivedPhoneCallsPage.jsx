@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import CallCard from "./CallCard";
+import { updateCall } from "../util/api";
 import { Button } from "react-bootstrap";
+import UnarchiveCallButton from "./UnarchiveCallButton";
 
-const ArchivedPhoneCallsPage = ({ calls }) => {
+const ArchivedPhoneCallsPage = ({ calls, setCalls, onUnarchive }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; 
   
@@ -16,12 +18,29 @@ const ArchivedPhoneCallsPage = ({ calls }) => {
     setCurrentPage(pageNumber);
   };
 
+  const handleUnarchive = (callId) => {
+    const updatedCalls = calls.map((call) =>
+      call.id === callId ? { ...call, is_archived: false } : call
+    );
+    updateCall(callId, { is_archived: false })
+    .then(() => {
+      console.log(`Call ID ${callId} unarchived successfully!`);
+      setCalls(updatedCalls);
+    })
+    .catch((error) => {
+      console.error(`Error unarchiving call ID ${callId}:`, error);
+    });
+};
+
   return (
     <div>
-      <h2 className="m-2">Archived Phone Calls</h2>
+      <h2 className="m-2">Archived Phone Calls</h2>    
       <ul>
         {currentCalls.map((call) => (
-          <CallCard key={call.id} call={call} context="archived"/>
+          <div key={call.id}>
+            <CallCard call={call} context="archived" onUnarchive={handleUnarchive} />
+            <UnarchiveCallButton call={call} onUnarchive={handleUnarchive} />
+          </div>
         ))}
       </ul>
       
