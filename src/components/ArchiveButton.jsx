@@ -73,11 +73,11 @@ const ArchiveButton = ({ calls, setCalls }) => {
   };
 
   return (
-    <div className="buttons-to-archive-calls">
-      <Button variant="primary" onClick={handleArchiveAll}>
+    <div className="buttons-to-archive-calls mb-3">
+      <Button className="me-2" variant="primary" onClick={handleArchiveAll}>
         Archive all Calls
       </Button>
-      <Button variant="primary" onClick={handleUnarchiveAll}>
+      <Button className="me-2" variant="primary" onClick={handleUnarchiveAll}>
         Unarchive all Calls
       </Button>
     </div>
