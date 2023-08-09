@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getCalls } from "../util/api";
 import { countPhoneCalls } from "../util/helpers";
+import { Button } from "react-bootstrap";
+
 import CallCard from "./CallCard";
 
 const ActivityDetailPage = ({ calls, setCalls }) => {
@@ -30,7 +32,7 @@ const ActivityDetailPage = ({ calls, setCalls }) => {
 
   return (
     <div>
-      <h3>Inbox</h3>
+      <h2 className="text-white">Inbox</h2>
       <ul>
         {currentCalls.map((call) => (
           <CallCard key={call.id} call={call} context="detail" />
@@ -41,9 +43,9 @@ const ActivityDetailPage = ({ calls, setCalls }) => {
         {Array.from(
           { length: Math.ceil(unarchivedCalls.length / itemsPerPage) },
           (_, index) => (
-            <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+            <Button key={index + 1} onClick={() => handlePageChange(index + 1)}>
               {index + 1}
-            </button>
+            </Button>
           )
         )}
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { updateCall } from "../util/api";
 import { Button } from "react-bootstrap";
+import "../css/archiveButton.css";
 
 const ArchiveButton = ({ calls, setCalls }) => {
   const handleArchiveAll = () => {
@@ -72,7 +73,7 @@ const ArchiveButton = ({ calls, setCalls }) => {
   };
 
   return (
-    <div>
+    <div className="buttons-to-archive-calls">
       <Button variant="primary" onClick={handleArchiveAll}>
         Archive all Calls
       </Button>

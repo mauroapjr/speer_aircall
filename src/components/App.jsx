@@ -5,6 +5,7 @@ import ActivityFeedPage from "./ActivityFeedPage";
 import ActivityDetailPage from "./ActivityDetailPage";
 import ArchivedPhoneCallsPage from "./ArchivedPhoneCallsPage";
 import ArchiveButton from "./ArchiveButton";
+import { Button } from "react-bootstrap";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -31,16 +32,16 @@ console.log('CALLS', calls)
     <div>
       <div className="container">
         <Header />
-        <div className="container-view">
+        <div className="container-buttons">
           <ul>
-            <button onClick={() => handleTabChange("all")}>
+            <Button  className="me-2" onClick={() => handleTabChange("all")}>
               Activity Feed
-            </button>
-            <button onClick={() => handleTabChange("archived")}>
+            </Button>
+            <Button  className="me-2" onClick={() => handleTabChange("archived")}>
               Archived Calls
-            </button>
-            <button onClick={() => setCurrentTab("detail")}>INBOX</button>
-            <ArchiveButton calls={calls} setCalls={setCalls} />
+            </Button>
+            <Button  className="me-2" onClick={() => setCurrentTab("detail")}>Inbox</Button>
+            
           </ul>
         </div>
 
@@ -51,6 +52,7 @@ console.log('CALLS', calls)
         ) : (
           <ActivityDetailPage calls={unarchivedCalls} setCalls={setCalls} />
         )}
+        <ArchiveButton calls={calls} setCalls={setCalls} />
       </div>
     </div>
   );

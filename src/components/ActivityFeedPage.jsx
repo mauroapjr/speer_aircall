@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CallCard from "./CallCard";
+import { Button } from "react-bootstrap";
 
 const ActivityFeedPage = ({ calls }) => {
   const unarchivedCalls = calls ?? [];
@@ -16,7 +17,7 @@ const ActivityFeedPage = ({ calls }) => {
 
   return (
     <div>
-      <h3>Activity Feed</h3>
+      <h2 className="text-white">Activity Feed</h2>
       <ul>
         {currentCalls.map((call) => (
           <CallCard key={call.id} call={call} context="feed" />
@@ -25,9 +26,9 @@ const ActivityFeedPage = ({ calls }) => {
       
       <div>
         {Array.from({ length: Math.ceil(unarchivedCalls.length / itemsPerPage) }, (_, index) => (
-          <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
+          <Button key={index + 1} onClick={() => handlePageChange(index + 1)}>
             {index + 1}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

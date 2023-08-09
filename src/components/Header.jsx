@@ -8,7 +8,7 @@ const Header = () => {
       <Container>
         <Navbar.Brand href="#home">
           <svg
-            width="486px"
+            width="286px"
             height="168px"
             viewBox="0 0 486 168"
             version="1.1"
