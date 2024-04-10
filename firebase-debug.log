@@ -1,0 +1,40 @@
+[debug] [2023-08-09T07:15:57.993Z] ----------------------------------------------------------------------
+[debug] [2023-08-09T07:15:57.996Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\user\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js projects:create
+[debug] [2023-08-09T07:15:57.996Z] CLI Version:   12.4.7
+[debug] [2023-08-09T07:15:57.996Z] Platform:      win32
+[debug] [2023-08-09T07:15:57.997Z] Node Version:  v20.5.0
+[debug] [2023-08-09T07:15:57.997Z] Time:          Wed Aug 09 2023 03:15:57 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-08-09T07:15:57.997Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-09T07:15:58.005Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-09T07:15:58.005Z] > authorizing via signed-in user (mauroapjrr@gmail.com)
+[debug] [2023-08-09T07:16:17.097Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects [none]
+[debug] [2023-08-09T07:16:17.097Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"mauro-aircall","name":"mauro-aircall"}
+[debug] [2023-08-09T07:16:17.409Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects 409
+[debug] [2023-08-09T07:16:17.409Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"error":{"code":409,"message":"Requested entity already exists","status":"ALREADY_EXISTS"}}
+[debug] [2023-08-09T07:16:17.484Z] FirebaseError: HTTP Error: 409, Requested entity already exists
+    at responseToError (C:\Users\user\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\user\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:285:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to create project because there is already a project with ID mauro-aircall. Please try again with a unique project ID.
+[debug] [2023-08-09T07:16:23.953Z] ----------------------------------------------------------------------
+[debug] [2023-08-09T07:16:23.958Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\user\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js projects:create
+[debug] [2023-08-09T07:16:23.959Z] CLI Version:   12.4.7
+[debug] [2023-08-09T07:16:23.959Z] Platform:      win32
+[debug] [2023-08-09T07:16:23.959Z] Node Version:  v20.5.0
+[debug] [2023-08-09T07:16:23.960Z] Time:          Wed Aug 09 2023 03:16:23 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-08-09T07:16:23.960Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-09T07:16:23.970Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-09T07:16:23.971Z] > authorizing via signed-in user (mauroapjrr@gmail.com)
+[debug] [2023-08-09T07:16:36.066Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects [none]
+[debug] [2023-08-09T07:16:36.067Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"speer_aircall","name":"speer_aircall"}
+[debug] [2023-08-09T07:16:36.380Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects 400
+[debug] [2023-08-09T07:16:36.380Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"error":{"code":400,"message":"Request contains an invalid argument.","status":"INVALID_ARGUMENT","details":[{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"project_id","description":"project_id contains invalid characters"},{"field":"display_name","description":"project display name contains invalid characters"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"url":"https://cloud.google.com/resource-manager/reference/rest/v1/projects"}]}]}}
+[debug] [2023-08-09T07:16:36.455Z] FirebaseError: HTTP Error: 400, Request contains an invalid argument.
+    at responseToError (C:\Users\user\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\user\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:285:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to create project. See firebase-debug.log for more info.
